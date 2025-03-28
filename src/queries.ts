@@ -37,7 +37,7 @@ interface SearchWordParams {
   word: string;
 }
 
-interface SearchWordResponse {
+export interface SearchWordResponse {
   data: SearchAPIResponse | SearchAPIError | undefined;
   success: boolean;
 }

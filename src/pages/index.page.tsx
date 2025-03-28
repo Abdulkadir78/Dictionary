@@ -36,7 +36,7 @@ const App = () => {
   return (
     <div className="container mx-auto px-4 flex flex-col items-center mt-10">
       <div className="w-full max-w-2xl">
-        <form onSubmit={handleSubmit}>
+        <form role="form" onSubmit={handleSubmit}>
           <input
             ref={wordRef}
             type="text"
