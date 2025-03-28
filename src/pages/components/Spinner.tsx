@@ -1,6 +1,7 @@
 export const Spinner = () => {
   return (
     <svg
+      role="img"
       className="h-10 w-10 animate-spin stroke-white/75"
       viewBox="0 0 256 256"
     >

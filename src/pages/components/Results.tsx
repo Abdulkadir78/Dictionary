@@ -1,7 +1,7 @@
 import { SearchAPIResponse } from "@/queries";
 
 interface ResultsProps {
-  data?: SearchAPIResponse[number];
+  data?: Partial<SearchAPIResponse[number]>;
 }
 
 export const Results: React.FC<ResultsProps> = ({ data }) => {
@@ -9,7 +9,7 @@ export const Results: React.FC<ResultsProps> = ({ data }) => {
     return null;
   }
 
-  const audio = data.phonetics.findLast((p) => p.audio)?.audio;
+  const audio = data.phonetics?.findLast((p) => p.audio)?.audio;
 
   const handleAudioClick = () => {
     const player = new Audio(audio);
@@ -32,7 +32,7 @@ export const Results: React.FC<ResultsProps> = ({ data }) => {
       </div>
 
       {data.meanings
-        .map((m, i) => {
+        ?.map((m, i) => {
           return (
             <div key={i} className="py-6 border-b border-white/5">
               <p className="italic opacity-70 capitalize">{m.partOfSpeech}</p>
