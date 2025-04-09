@@ -1,0 +1,47 @@
+name: Test
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Restore cache
+        id: cache # to reference the cache step later
+        uses: actions/cache@v4
+        with:
+          path:
+            .next/cache
+            # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          # If source files and packages changed, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
+            ${{ runner.os }}-yarn-
+
+      - name: Log cache hit and key
+        run: |
+          echo "Cache hit: ${{ steps.cache.outputs.cache-hit }}"
+          if [ "${{ steps.cache.outputs.cache-hit }}" == "true" ]; then
+            echo "Cache key used: ${{ steps.cache.outputs.cache-key }}"
+          else
+            echo "Cache miss, cache created with key: ${{ steps.cache.outputs.cache-key }}"
+          fi
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run tests
+        run: yarn test
