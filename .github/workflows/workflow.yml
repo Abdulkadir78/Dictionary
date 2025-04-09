@@ -21,9 +21,9 @@ jobs:
         id: cache # to reference the cache step later
         uses: actions/cache@v4
         with:
-          path:
+          path: |
             .next/cache
-            # Generate a new cache whenever packages or source files change.
+          # Generate a new cache whenever packages or source files change.
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
           # If source files and packages changed, rebuild from a prior cache.
