@@ -31,11 +31,9 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        if: ${{steps.cache.outputs.cache-hit}} != "true"
         run: yarn
 
       - name: Build
-        if: ${{steps.cache.outputs.cache-hit}} != "true"
         run: yarn build
 
       - name: Run tests
