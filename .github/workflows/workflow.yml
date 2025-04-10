@@ -30,20 +30,13 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
             ${{ runner.os }}-yarn-
 
-      - name: Log cache hit and key
-        run: |
-          echo "Cache hit: ${{ steps.cache.outputs.cache-hit }}"
-          if [ "${{ steps.cache.outputs.cache-hit }}" == "true" ]; then
-            echo "Cache key used: ${{ steps.cache.outputs.cache-key }}"
-          else
-            echo "Cache miss, cache created with key: ${{ steps.cache.outputs.cache-key }}"
-          fi
-
       - name: Install dependencies
         run: yarn
+        if: ${{steps.cache.outputs.cache-hit}} != "true"
 
       - name: Build
         run: yarn build
+        if: ${{steps.cache.outputs.cache-hit}} != "true"
 
       - name: Run tests
         run: yarn test
