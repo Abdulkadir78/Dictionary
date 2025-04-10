@@ -31,12 +31,12 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn
         if: ${{steps.cache.outputs.cache-hit}} != "true"
+        run: yarn
 
       - name: Build
-        run: yarn build
         if: ${{steps.cache.outputs.cache-hit}} != "true"
+        run: yarn build
 
       - name: Run tests
         run: yarn test
